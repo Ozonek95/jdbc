@@ -3,12 +3,12 @@ package com.shop;
 import java.sql.Connection;
 import java.util.Scanner;
 
-public class ProductOperationProvider {
+public class ProductOperationFactory {
     private Scanner scanner;
     private Connection connection;
     private int choice;
 
-    public ProductOperationProvider(Connection connection) {
+    public ProductOperationFactory(Connection connection) {
         this.scanner = scanner;
         this.connection = connection;
     }

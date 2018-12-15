@@ -7,11 +7,11 @@ import java.util.Scanner;
 class Controller {
 
     private Connection connection;
-    private ProductOperationProvider productOperationProvider;
+    private ProductOperationFactory productOperationProvider;
     private Scanner scanner;
     private PrintOptions printOptionsOnConsole;
 
-    Controller(Connection connection, ProductOperationProvider productOperationProvider, Scanner scanner, PrintOptions printOptionsOnConsole) {
+    Controller(Connection connection, ProductOperationFactory productOperationProvider, Scanner scanner, PrintOptions printOptionsOnConsole) {
         this.connection = connection;
         this.productOperationProvider = productOperationProvider;
         this.scanner = scanner;
