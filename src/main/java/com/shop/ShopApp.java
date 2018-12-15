@@ -39,7 +39,7 @@ public class ShopApp {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        findAll(statement);
+        insertProduct(connection,scanner);
 
 
         //CLOSE CONNECTION
@@ -78,6 +78,12 @@ public class ShopApp {
             System.out.println("We updated :"+updated+" products");
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
     }
@@ -103,12 +109,74 @@ public class ShopApp {
             System.out.println(inserted +" new products added.");
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
     }
 
-    private static void showProduct(Scanner scanner, Connection connection){
+    private static void showProduct(Scanner scanner, Connection connection)  {
+        System.out.println("Give product ID");
+        int productId = Integer.parseInt(scanner.nextLine());
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement("SELECT * FROM PRODUCTS WHERE PRODUCT_ID = ?");
+            preparedStatement.setInt(1,productId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        ResultSet resultSet = null;
+        try {
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                String name = resultSet.getString("name");
+                String catalogNumber = resultSet.getString("catalog_number");
+                String description = resultSet.getString("description");
 
+                System.out.println(name+" "+catalogNumber+" "+description);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                resultSet.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+    }
+
+    public static void deleteProcuct(Scanner scanner,Connection connection){
+        System.out.println("Give ID of product You want to delete");
+        int productId = Integer.parseInt(scanner.nextLine());
+        PreparedStatement preparedStatement = null;
+        try {
+            connection.prepareStatement("DELETE FROM PRODUCTS WHERE PRODUCT_ID = ?");
+            preparedStatement.setInt(1,productId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if(preparedStatement!=null){
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     //RESULT SET
