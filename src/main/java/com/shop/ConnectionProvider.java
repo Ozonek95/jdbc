@@ -19,7 +19,6 @@ public class ConnectionProvider {
             e.printStackTrace();
         }
 
-        //CONNECTION
         Connection connection = null;
         try {
             connection = DriverManager.getConnection(DB_URL, USER, PASS);

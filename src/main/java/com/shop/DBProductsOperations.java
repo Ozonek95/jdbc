@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 public class DBProductsOperations {
     private Connection connection;
-    Scanner scanner = new Scanner(System.in);
 
     public DBProductsOperations(Connection connection) {
         this.connection = connection;

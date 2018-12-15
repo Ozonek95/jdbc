@@ -1,35 +1,41 @@
 package com.shop;
 
-import com.mysql.jdbc.Connection;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 
 public class Controller {
 
-   private java.sql.Connection connection;
+   private Connection connection;
     private Statement statement;
-    private DBProductsOperations dbProductsOperations = new DBProductsOperations(connection);
-    private Scanner scanner = new Scanner(System.in);
+    private DBProductsOperations dbProductsOperations;
+    private Scanner scanner;
+    private PrintOptionsOnConsole printOptionsOnConsole;
 
-    public Controller(Connection connection) {
+    public Controller(Connection connection, DBProductsOperations dbProductsOperations, Scanner scanner, PrintOptionsOnConsole printOptionsOnConsole) {
         this.connection = connection;
         try {
             this.statement = connection.createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        this.dbProductsOperations = dbProductsOperations;
+        this.scanner = scanner;
+        this.printOptionsOnConsole = printOptionsOnConsole;
+
     }
+
 
     public void workOnDataBase() {
         while (true) {
-            System.out.println("To update choose 1");
-            System.out.println("To show all choose 2");
-            System.out.println("To insert choose 3");
-            System.out.println("To show specific product choose 4");
-            System.out.println("To delete choose 5");
-            System.out.println("Choose something else to exit.");
+            printOptionsOnConsole.printOption("To update choose 1");
+            printOptionsOnConsole.printOption("To show all choose 2");
+            printOptionsOnConsole.printOption("To insert choose 3");
+            printOptionsOnConsole.printOption("To show specific product choose 4");
+            printOptionsOnConsole.printOption("To delete choose 5");
+            printOptionsOnConsole.printOption("Choose something else to exit.");
             int choice = Integer.parseInt(scanner.nextLine());
             switch (choice) {
                 case 1:
