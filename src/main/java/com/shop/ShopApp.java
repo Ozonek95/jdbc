@@ -39,7 +39,7 @@ public class ShopApp {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        updateProduct(connection,scanner);
+        findAll(statement);
 
 
         //CLOSE CONNECTION
@@ -82,29 +82,48 @@ public class ShopApp {
 
     }
 
-    private static void insertProduct(Statement statement) {
+    private static void insertProduct(Connection connection, Scanner scanner) {
 
+        System.out.println("Give product ID");
+        int productId = Integer.parseInt(scanner.nextLine());
+        System.out.println("Give catalog number");
+        String catalogNumber = scanner.nextLine();
+        System.out.println("Give product name");
+        String productName = scanner.nextLine();
+        System.out.println("Give description");
+        String description = scanner.nextLine();
         PreparedStatement preparedStatement = null;
         try {
-            int inserted = statement.executeUpdate("INSERT INTO PRODUCTS VALUES " + "(1,123456,'first product',null)");
+            preparedStatement = connection.prepareStatement("INSERT INTO PRODUCTS VALUES(?,?,?,?)");
+            preparedStatement.setInt(1,productId);
+            preparedStatement.setString(2,catalogNumber);
+            preparedStatement.setString(3,productName);
+            preparedStatement.setString(4,description);
+            int inserted = preparedStatement.executeUpdate();
             System.out.println(inserted +" new products added.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+    }
+
+    private static void showProduct(Scanner scanner, Connection connection){
+
     }
 
     //RESULT SET
 
-    private static void findAll(Statement statement, Scanner scanner) {
+    private static void findAll(Statement statement) {
         ResultSet resultSet = null;
         try {
-            resultSet = statement.executeQuery("SELECT product_id,name FROM PRODUCTS");
+            resultSet = statement.executeQuery("SELECT * FROM PRODUCTS");
             while (resultSet.next()){
 
                 int productId = resultSet.getInt("product_id");
                 String name = resultSet.getString("name");
+                String description = resultSet.getString("description");
 
-                System.out.println("Product with id: "+productId+" and name: "+name+".");
+                System.out.println("Product with id: "+productId+" and name: "+name+" description :"+description);
             }
 
         } catch (SQLException e) {
