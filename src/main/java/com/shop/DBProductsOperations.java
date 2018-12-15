@@ -1,58 +1,17 @@
 package com.shop;
 
-import com.mysql.jdbc.Driver;
-
 import java.sql.*;
 import java.util.Scanner;
 
-public class ShopApp {
+public class DBProductsOperations {
+    private Connection connection;
+    Scanner scanner = new Scanner(System.in);
 
-
-    private static String PASS = "student1";
-    private static String USER = "student1";
-    private static String DB_URL = "jdbc:mysql://localhost/shop";
-
-
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        //DRIVER
-        try {
-            Driver driver = new Driver();
-            DriverManager.registerDriver(driver);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        //CONNECTION
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(DB_URL, USER, PASS);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        //STATEMENT
-
-        Statement statement = null;
-        try {
-            statement = connection.createStatement();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        insertProduct(connection,scanner);
-
-
-        //CLOSE CONNECTION
-        try {
-            if (connection != null) {
-                connection.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public DBProductsOperations(Connection connection) {
+        this.connection = connection;
     }
 
-    private static void updateProduct(Connection connection, Scanner scanner) {
+    void updateProduct(Connection connection, Scanner scanner) {
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement("UPDATE PRODUCTS SET CATALOG_NUMBER = ?, NAME = ?, DESCRIPTION = ? WHERE PRODUCT_ID = ?");
@@ -69,13 +28,13 @@ public class ShopApp {
         String description = scanner.nextLine();
 
         try {
-            preparedStatement.setString(1,catalogNumber);
-            preparedStatement.setString(2,name);
-            preparedStatement.setString(3,description);
-            preparedStatement.setInt(4,productId);
+            preparedStatement.setString(1, catalogNumber);
+            preparedStatement.setString(2, name);
+            preparedStatement.setString(3, description);
+            preparedStatement.setInt(4, productId);
             int updated = preparedStatement.executeUpdate();
 
-            System.out.println("We updated :"+updated+" products");
+            System.out.println("We updated :" + updated + " products");
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -88,7 +47,7 @@ public class ShopApp {
 
     }
 
-    private static void insertProduct(Connection connection, Scanner scanner) {
+    void insertProduct(Connection connection, Scanner scanner) {
 
         System.out.println("Give product ID");
         int productId = Integer.parseInt(scanner.nextLine());
@@ -101,15 +60,15 @@ public class ShopApp {
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement("INSERT INTO PRODUCTS VALUES(?,?,?,?)");
-            preparedStatement.setInt(1,productId);
-            preparedStatement.setString(2,catalogNumber);
-            preparedStatement.setString(3,productName);
-            preparedStatement.setString(4,description);
+            preparedStatement.setInt(1, productId);
+            preparedStatement.setString(2, catalogNumber);
+            preparedStatement.setString(3, productName);
+            preparedStatement.setString(4, description);
             int inserted = preparedStatement.executeUpdate();
-            System.out.println(inserted +" new products added.");
+            System.out.println(inserted + " new products added.");
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
                 preparedStatement.close();
             } catch (SQLException e) {
@@ -119,30 +78,29 @@ public class ShopApp {
 
     }
 
-    private static void showProduct(Scanner scanner, Connection connection)  {
+    void showProduct(Scanner scanner, Connection connection) {
         System.out.println("Give product ID");
         int productId = Integer.parseInt(scanner.nextLine());
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement("SELECT * FROM PRODUCTS WHERE PRODUCT_ID = ?");
-            preparedStatement.setInt(1,productId);
+            preparedStatement.setInt(1, productId);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         ResultSet resultSet = null;
         try {
             resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 String name = resultSet.getString("name");
                 String catalogNumber = resultSet.getString("catalog_number");
                 String description = resultSet.getString("description");
 
-                System.out.println(name+" "+catalogNumber+" "+description);
+                System.out.println(name + " " + catalogNumber + " " + description);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             try {
                 preparedStatement.close();
             } catch (SQLException e) {
@@ -158,18 +116,19 @@ public class ShopApp {
 
     }
 
-    public static void deleteProcuct(Scanner scanner,Connection connection){
+    void deleteProcuct(Scanner scanner, Connection connection) {
         System.out.println("Give ID of product You want to delete");
         int productId = Integer.parseInt(scanner.nextLine());
         PreparedStatement preparedStatement = null;
         try {
-            connection.prepareStatement("DELETE FROM PRODUCTS WHERE PRODUCT_ID = ?");
-            preparedStatement.setInt(1,productId);
+            preparedStatement = connection.prepareStatement("DELETE FROM PRODUCTS WHERE PRODUCT_ID = ?");
+            preparedStatement.setInt(1, productId);
+            int deleted = preparedStatement.executeUpdate();
+            System.out.println("You have deleted "+deleted+" items.");
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        finally {
-            if(preparedStatement!=null){
+        } finally {
+            if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
@@ -181,23 +140,23 @@ public class ShopApp {
 
     //RESULT SET
 
-    private static void findAll(Statement statement) {
+    void findAll(Statement statement) {
         ResultSet resultSet = null;
         try {
             resultSet = statement.executeQuery("SELECT * FROM PRODUCTS");
-            while (resultSet.next()){
+            while (resultSet.next()) {
 
                 int productId = resultSet.getInt("product_id");
                 String name = resultSet.getString("name");
                 String description = resultSet.getString("description");
 
-                System.out.println("Product with id: "+productId+" and name: "+name+" description :"+description);
+                System.out.println("Product with id: " + productId + " and name: " + name + " description :" + description);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if(resultSet!=null){
+            if (resultSet != null) {
                 try {
                     resultSet.close();
                 } catch (SQLException e) {
@@ -207,14 +166,5 @@ public class ShopApp {
         }
     }
 
-    public static void workOnDataBase(Scanner scanner){
-        System.out.println("Do You want to update?(press: 1), or show all in products?(press: 2)");
-        int choice = Integer.parseInt(scanner.nextLine());
-        switch (choice){
-            case 1:
-
-
-        }
-    }
 
 }
