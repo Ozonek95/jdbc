@@ -1,42 +1,32 @@
 package com.shop;
 
 import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class ProductOperationFactory {
     private Scanner scanner;
     private Connection connection;
     private int choice;
+    private Map<Integer,ProductOperation> operationsMap;
 
-    public ProductOperationFactory(Connection connection) {
-        this.scanner = scanner;
+    public ProductOperationFactory(Connection connection, Scanner scanner) {
         this.connection = connection;
+        operationsMap = new HashMap<Integer, ProductOperation>();
+        operationsMap.put(1,new ProductUpdate(scanner,connection));
+        operationsMap.put(2,new ProductShowAll(connection));
+        operationsMap.put(3,new ProductInsertProduct(connection,scanner));
+        operationsMap.put(4,new ProductShowOne(connection,scanner));
+        operationsMap.put(5,new ProductDelete(scanner,connection));
+        this.scanner=scanner;
     }
 
     public void setChoice(int choice) {
         this.choice = choice;
     }
 
-    public void setScanner(Scanner scanner) {
-        this.scanner = scanner;
-    }
-
-    ProductOperation operate(){
-        if(choice==1){
-            return new ProductUpdate(scanner,connection);
-        }
-        else if(choice==2){
-            return new ProductShowAll(connection);
-        }
-        else if(choice==3){
-            return new ProductInsertProduct(connection,scanner);
-        }
-        else if(choice==4){
-            return new ProductShowOne(connection,scanner);
-        }
-        else if(choice==5){
-            return new ProductDelete(scanner,connection);
-        }
-        return null;
+    ProductOperation giveOperationBasedOnChoice(int choice){
+        return operationsMap.get(choice);
     }
 }

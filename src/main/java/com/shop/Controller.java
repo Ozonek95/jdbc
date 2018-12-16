@@ -7,13 +7,13 @@ import java.util.Scanner;
 class Controller {
 
     private Connection connection;
-    private ProductOperationFactory productOperationProvider;
+    private ProductOperationFactory productOperationFactory;
     private Scanner scanner;
     private PrintOptions printOptionsOnConsole;
 
     Controller(Connection connection, ProductOperationFactory productOperationProvider, Scanner scanner, PrintOptions printOptionsOnConsole) {
         this.connection = connection;
-        this.productOperationProvider = productOperationProvider;
+        this.productOperationFactory = productOperationProvider;
         this.scanner = scanner;
         this.printOptionsOnConsole = printOptionsOnConsole;
 
@@ -29,14 +29,7 @@ class Controller {
             printOptionsOnConsole.printOption("To delete choose 5");
             printOptionsOnConsole.printOption("Choose something else to exit.");
             int choice = Integer.parseInt(scanner.nextLine());
-            productOperationProvider.setChoice(choice);
-            productOperationProvider.setScanner(scanner);
-            productOperationProvider.operate().process();
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            productOperationFactory.giveOperationBasedOnChoice(choice).process();
         }
     }
 }

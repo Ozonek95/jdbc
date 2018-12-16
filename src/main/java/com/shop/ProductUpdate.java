@@ -16,7 +16,12 @@ public class ProductUpdate implements ProductOperation {
 
     public void process() {
             PreparedStatement preparedStatement = null;
-            try {
+        try {
+            connection.setAutoCommit(false);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
                 preparedStatement = connection.prepareStatement("UPDATE PRODUCTS SET CATALOG_NUMBER = ?, NAME = ?, DESCRIPTION = ? WHERE PRODUCT_ID = ?");
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -31,6 +36,7 @@ public class ProductUpdate implements ProductOperation {
             String description = scanner.nextLine();
 
             try {
+
                 preparedStatement.setString(1, catalogNumber);
                 preparedStatement.setString(2, name);
                 preparedStatement.setString(3, description);
