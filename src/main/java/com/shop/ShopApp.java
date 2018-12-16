@@ -1,10 +1,8 @@
 package com.shop;
 
-import com.shop.controller.ControllerProduct;
 import com.shop.controller.ControllerWarehouse;
-import com.shop.domain.Owner;
-import com.shop.domain.Product;
 import com.shop.domain.Warehouse;
+import com.shop.domain.dto.WarehouseDTO;
 import com.shop.hibernate.HibernateSessionRegistery;
 import com.shop.repository.mysql.MySqlRepositoryProduct;
 import com.shop.repository.mysql.MySqlRepositoryWarehouse;
@@ -22,9 +20,11 @@ public class ShopApp {
         MySqlRepositoryWarehouse mySqlRepositoryWarehouse = new MySqlRepositoryWarehouse(session);
         ControllerWarehouse controllerWarehouse = new ControllerWarehouse(mySqlRepositoryWarehouse,session);
         MySqlRepositoryProduct mySqlRepositoryProduct = new MySqlRepositoryProduct(session);
-        ControllerProduct controllerProduct = new ControllerProduct(session,mySqlRepositoryProduct);
-        controllerWarehouse.create("Magazyn","dawfaw","fawfa","dd","dawgawg","dw",new Owner("Kacpi","male"));
-       // List<Product> productsList = controllerProduct.findAll();
+       // ControllerProduct controllerProduct = new ControllerProduct(session,mySqlRepositoryProduct);
+        WarehouseDTO warehouseDTO = new WarehouseDTO("Imie","Ulica","Miasto","Kod","Budynek","kraj","Imie","female");
+
+        controllerWarehouse.create(warehouseDTO);
+        //List<Product> productsList = controllerProduct.findAll();
         List<Warehouse> warehouses = controllerWarehouse.findAll();
         warehouses.forEach(System.out::println);
 

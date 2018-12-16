@@ -1,5 +1,6 @@
 package com.shop.domain;
 
+import com.shop.domain.dto.WarehouseDTO;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
@@ -23,6 +24,7 @@ public class Warehouse {
     private Owner owner;
 
     public Warehouse(String name, String street, String city, String postal, String buildingNumber, String country, Owner owner) {
+
         this.name = name;
         this.street = street;
         this.city = city;

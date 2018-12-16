@@ -1,9 +1,6 @@
 package com.shop.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table
@@ -12,9 +9,11 @@ public class Owner {
     @GeneratedValue
     private int id;
     private String name;
-    private String sex;
 
-    public Owner(String name, String sex) {
+    @Enumerated(EnumType.STRING)
+    private Sex sex;
+
+    public Owner(String name, Sex sex) {
         this.name = name;
         this.sex = sex;
     }
