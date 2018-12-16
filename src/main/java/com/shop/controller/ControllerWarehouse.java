@@ -1,5 +1,6 @@
 package com.shop.controller;
 
+import com.shop.domain.Owner;
 import com.shop.repository.mysql.MySqlRepositoryWarehouse;
 import com.shop.domain.Warehouse;
 import org.hibernate.Session;
@@ -15,9 +16,9 @@ public class ControllerWarehouse {
         this.session=session;
     }
 
-    public  Integer create(String name, String street, String city, String postal, String buildingNumber, String country) {
+    public  Integer create(String name, String street, String city, String postal, String buildingNumber, String country, Owner owner) {
         Integer id = null;
-        Warehouse warehouse = new Warehouse(name, street, city, postal, buildingNumber, country);
+        Warehouse warehouse = new Warehouse(name, street, city, postal, buildingNumber, country, owner);
         try {
             session.getTransaction().begin();
             id = mySqlRepositoryWarehouse.create(warehouse);

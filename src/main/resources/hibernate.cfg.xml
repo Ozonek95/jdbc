@@ -14,6 +14,7 @@
         <mapping class="com.shop.domain.Product"/>
         <mapping class="com.shop.domain.Warehouse"/>
         <mapping class="com.shop.domain.Price"/>
+        <mapping class="com.shop.domain.Owner"/>
 
     </session-factory>
 </hibernate-configuration>

@@ -1,5 +1,7 @@
 package com.shop.domain;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 
 @Entity
@@ -16,14 +18,18 @@ public class Warehouse {
     @Column(name = "building_number")
     private  String buildingNumber;
     private  String country;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "owner_id")
+    private Owner owner;
 
-    public Warehouse(String name, String street, String city, String postal, String buildingNumber, String country) {
+    public Warehouse(String name, String street, String city, String postal, String buildingNumber, String country, Owner owner) {
         this.name = name;
         this.street = street;
         this.city = city;
         this.postal = postal;
         this.buildingNumber = buildingNumber;
         this.country = country;
+        this.owner = owner;
     }
 
     private Warehouse(){}
@@ -38,6 +44,7 @@ public class Warehouse {
                 ", postal='" + postal + '\'' +
                 ", buildingNumber='" + buildingNumber + '\'' +
                 ", country='" + country + '\'' +
+                ", owner=" + owner +
                 '}';
     }
 

@@ -2,6 +2,7 @@ package com.shop;
 
 import com.shop.controller.ControllerProduct;
 import com.shop.controller.ControllerWarehouse;
+import com.shop.domain.Owner;
 import com.shop.domain.Product;
 import com.shop.domain.Warehouse;
 import com.shop.hibernate.HibernateSessionRegistery;
@@ -22,10 +23,10 @@ public class ShopApp {
         ControllerWarehouse controllerWarehouse = new ControllerWarehouse(mySqlRepositoryWarehouse,session);
         MySqlRepositoryProduct mySqlRepositoryProduct = new MySqlRepositoryProduct(session);
         ControllerProduct controllerProduct = new ControllerProduct(session,mySqlRepositoryProduct);
-        controllerProduct.create("Supi","Produkt");
-        controllerProduct.create("AlE","FAJNY");
-        List<Product> productsList = controllerProduct.findAll();
-        productsList.forEach(System.out::println);
+        controllerWarehouse.create("Magazyn","dawfaw","fawfa","dd","dawgawg","dw",new Owner("Kacpi","male"));
+       // List<Product> productsList = controllerProduct.findAll();
+        List<Warehouse> warehouses = controllerWarehouse.findAll();
+        warehouses.forEach(System.out::println);
 
             session.close();
             HibernateSessionRegistery.shutdown();
