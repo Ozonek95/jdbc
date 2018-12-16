@@ -8,5 +8,11 @@
 
         <property name="show_sql">true</property>
         <property name="hibernate.id.new_generator_mappings">false</property>
+
+
+
+        <mapping class="com.shop.domain.Product"/>
+        <mapping class="com.shop.domain.Warehouse"/>
+
     </session-factory>
 </hibernate-configuration>
