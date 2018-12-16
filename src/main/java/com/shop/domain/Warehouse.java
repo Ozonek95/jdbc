@@ -25,4 +25,17 @@ public class Warehouse {
         this.buildingNumber = buildingNumber;
         this.country = country;
     }
+
+    @Override
+    public String toString() {
+        return "Warehouse{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", street='" + street + '\'' +
+                ", city='" + city + '\'' +
+                ", postal='" + postal + '\'' +
+                ", buildingNumber='" + buildingNumber + '\'' +
+                ", country='" + country + '\'' +
+                '}';
+    }
 }
