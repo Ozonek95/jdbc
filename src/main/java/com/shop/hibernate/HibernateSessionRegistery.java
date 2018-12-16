@@ -1,4 +1,4 @@
-package com.shop.SessionRegister;
+package com.shop.hibernate;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
