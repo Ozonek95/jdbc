@@ -28,12 +28,25 @@ public class ControllerWarehouse {
         return id;
     }
 
-//    public void changeName(Integer warehouseId, String name) {
-//        session.getTransaction().begin();
-//        mySqlRepositoryWarehouse.updateName(warehouseId,name);
-//    }
+    public void changeName(Integer warehouseId, String name) {
+        try {
+            session.getTransaction().begin();
+        Warehouse warehouse = find(warehouseId);
+        warehouse.changeName(name);
+        mySqlRepositoryWarehouse.update(warehouse);
+        session.getTransaction().commit();
+        } catch (Exception e){
+            e.printStackTrace();
+            session.getTransaction().rollback();
+        }
+    }
 
     public Warehouse find(Integer warehouseId) {
         return mySqlRepositoryWarehouse.findById(warehouseId);
+    }
+
+    public void delete(Integer warehouseId) {
+        Warehouse warehouse = find(warehouseId);
+        mySqlRepositoryWarehouse.delete(warehouse);
     }
 }

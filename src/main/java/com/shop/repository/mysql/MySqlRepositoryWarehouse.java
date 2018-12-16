@@ -17,4 +17,12 @@ public class MySqlRepositoryWarehouse {
     public Warehouse findById(Integer warehouseId) {
         return session.get(Warehouse.class,warehouseId);
     }
+
+    public void update(Warehouse warehouse) {
+        session.update(warehouse);
+    }
+
+    public void delete(Warehouse warehouse) {
+        session.delete(warehouse);
+    }
 }

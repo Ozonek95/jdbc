@@ -15,15 +15,13 @@ public class ShopApp {
                         .getSessionFactory()
                         .openSession();
 
-        MySqlRepositoryProduct mySqlRepositoryProduct = new MySqlRepositoryProduct(session);
         MySqlRepositoryWarehouse mySqlRepositoryWarehouse = new MySqlRepositoryWarehouse(session);
-        ControllerProduct controllerProduct = new ControllerProduct(session, mySqlRepositoryProduct);
         ControllerWarehouse controllerWarehouse = new ControllerWarehouse(mySqlRepositoryWarehouse,session);
         String name ="new name";
         Integer warehouseId = 1;
-       // controllerWarehouse.changeName(warehouseId,name);
-        Warehouse warehouse = controllerWarehouse.find(warehouseId);
-        System.out.println(warehouse);
+        controllerWarehouse.changeName(warehouseId,name);
+        controllerWarehouse.delete(warehouseId);
+
             session.close();
             HibernateSessionRegistery.shutdown();
     }
