@@ -1,8 +1,11 @@
 package com.shop.controller;
 
+import com.shop.domain.Price;
 import com.shop.domain.Product;
 import com.shop.repository.mysql.MySqlRepositoryProduct;
 import org.hibernate.Session;
+
+import java.util.List;
 
 public class ControllerProduct {
 
@@ -21,7 +24,7 @@ public class ControllerProduct {
             session.getTransaction().begin();
 
             id = mySqlRepositoryProduct
-                            .save(new Product("Bulbazayr", "d1245-22"));
+                            .save(new Product(new Price(13, "PLN"), name, catalogNumber));
 
             session.getTransaction().commit();
         } catch (Exception exception) {
@@ -65,5 +68,9 @@ public class ControllerProduct {
             session.getTransaction().rollback();
         }
 
+    }
+
+    public List<Product> findAll() {
+        return mySqlRepositoryProduct.findAll();
     }
 }

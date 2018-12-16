@@ -13,6 +13,7 @@
 
         <mapping class="com.shop.domain.Product"/>
         <mapping class="com.shop.domain.Warehouse"/>
+        <mapping class="com.shop.domain.Price"/>
 
     </session-factory>
 </hibernate-configuration>
