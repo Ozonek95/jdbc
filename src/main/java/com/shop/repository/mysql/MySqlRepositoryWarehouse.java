@@ -3,6 +3,8 @@ package com.shop.repository.mysql;
 import com.shop.domain.Warehouse;
 import org.hibernate.Session;
 
+import java.util.List;
+
 public class MySqlRepositoryWarehouse {
     private Session session;
 
@@ -24,5 +26,9 @@ public class MySqlRepositoryWarehouse {
 
     public void delete(Warehouse warehouse) {
         session.delete(warehouse);
+    }
+
+    public List<Warehouse> findAll() {
+        return session.createQuery("From Warehouse").list();
     }
 }

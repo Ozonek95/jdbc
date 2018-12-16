@@ -4,6 +4,8 @@ import com.shop.repository.mysql.MySqlRepositoryWarehouse;
 import com.shop.domain.Warehouse;
 import org.hibernate.Session;
 
+import java.util.List;
+
 public class ControllerWarehouse {
     private final MySqlRepositoryWarehouse mySqlRepositoryWarehouse;
     private Session session;
@@ -47,6 +49,18 @@ public class ControllerWarehouse {
 
     public void delete(Integer warehouseId) {
         Warehouse warehouse = find(warehouseId);
-        mySqlRepositoryWarehouse.delete(warehouse);
+        try {
+            session.getTransaction().begin();
+            mySqlRepositoryWarehouse.delete(warehouse);
+            session.getTransaction().commit();
+        } catch (Exception e){
+            e.printStackTrace();
+            session.getTransaction().rollback();
+        }
+
+    }
+
+    public List<Warehouse> findAll() {
+       return mySqlRepositoryWarehouse.findAll();
     }
 }

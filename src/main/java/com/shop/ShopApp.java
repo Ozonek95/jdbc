@@ -8,6 +8,8 @@ import com.shop.repository.mysql.MySqlRepositoryProduct;
 import com.shop.repository.mysql.MySqlRepositoryWarehouse;
 import org.hibernate.Session;
 
+import java.util.List;
+
 public class ShopApp {
     public static void main(String[] args) {
         Session session =
@@ -17,10 +19,8 @@ public class ShopApp {
 
         MySqlRepositoryWarehouse mySqlRepositoryWarehouse = new MySqlRepositoryWarehouse(session);
         ControllerWarehouse controllerWarehouse = new ControllerWarehouse(mySqlRepositoryWarehouse,session);
-        String name ="new name";
-        Integer warehouseId = 1;
-        controllerWarehouse.changeName(warehouseId,name);
-        controllerWarehouse.delete(warehouseId);
+        List<Warehouse> warehouseList = controllerWarehouse.findAll();
+        warehouseList.forEach(System.out::println);
 
             session.close();
             HibernateSessionRegistery.shutdown();
