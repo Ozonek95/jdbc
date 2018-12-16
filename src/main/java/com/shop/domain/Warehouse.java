@@ -26,6 +26,8 @@ public class Warehouse {
         this.country = country;
     }
 
+    private Warehouse(){}
+
     @Override
     public String toString() {
         return "Warehouse{" +

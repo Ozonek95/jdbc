@@ -27,4 +27,13 @@ public class ControllerWarehouse {
         }
         return id;
     }
+
+//    public void changeName(Integer warehouseId, String name) {
+//        session.getTransaction().begin();
+//        mySqlRepositoryWarehouse.updateName(warehouseId,name);
+//    }
+
+    public Warehouse find(Integer warehouseId) {
+        return mySqlRepositoryWarehouse.findById(warehouseId);
+    }
 }

@@ -2,6 +2,7 @@ package com.shop;
 
 import com.shop.controller.ControllerProduct;
 import com.shop.controller.ControllerWarehouse;
+import com.shop.domain.Warehouse;
 import com.shop.hibernate.HibernateSessionRegistery;
 import com.shop.repository.mysql.MySqlRepositoryProduct;
 import com.shop.repository.mysql.MySqlRepositoryWarehouse;
@@ -18,16 +19,11 @@ public class ShopApp {
         MySqlRepositoryWarehouse mySqlRepositoryWarehouse = new MySqlRepositoryWarehouse(session);
         ControllerProduct controllerProduct = new ControllerProduct(session, mySqlRepositoryProduct);
         ControllerWarehouse controllerWarehouse = new ControllerWarehouse(mySqlRepositoryWarehouse,session);
-        String name = "Random";
-        String street="Warehouse";
-        String city="From";
-        String postal="3124";
-        String buildingNumber="Xity";
-        String country="Nibylandia";
-
-        Integer warehouseId = controllerWarehouse.create(name,street,city,postal,buildingNumber,country);
-        System.out.println(warehouseId);
-
+        String name ="new name";
+        Integer warehouseId = 1;
+       // controllerWarehouse.changeName(warehouseId,name);
+        Warehouse warehouse = controllerWarehouse.find(warehouseId);
+        System.out.println(warehouse);
             session.close();
             HibernateSessionRegistery.shutdown();
     }
