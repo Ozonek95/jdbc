@@ -21,9 +21,6 @@ public class Product {
         this.catalogNumber=catalogNumber;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     private Product(){
 
@@ -37,5 +34,9 @@ public class Product {
                 ", catalogNumber='" + catalogNumber + '\'' +
                 ", description='" + description + '\'' +
                 '}';
+    }
+
+    public void changeDescription(String description) {
+        this.description = description;
     }
 }
