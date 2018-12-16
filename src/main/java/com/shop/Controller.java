@@ -30,13 +30,7 @@ class Controller {
             printOptionsOnConsole.printOption("Choose something else to exit.");
             int choice = Integer.parseInt(scanner.nextLine());
             productOperationProvider.setChoice(choice);
-            productOperationProvider.setScanner(scanner);
             productOperationProvider.operate().process();
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
     }
 }

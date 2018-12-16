@@ -1,16 +1,25 @@
 package com.shop;
 
 import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class ProductOperationFactory {
     private Scanner scanner;
     private Connection connection;
     private int choice;
+    private Map<Integer,ProductOperation> operations;
 
-    public ProductOperationFactory(Connection connection) {
+    public ProductOperationFactory(Connection connection,Scanner scanner) {
         this.scanner = scanner;
         this.connection = connection;
+        this.operations = new HashMap<>();
+        operations.put(1,new ProductUpdate(scanner,connection));
+        operations.put(2,new ProductShowAll(connection));
+        operations.put(3,new ProductInsert(connection,scanner));
+        operations.put(4,new ProductShowOne(connection,scanner));
+        operations.put(5,new ProductDelete(scanner,connection));
     }
 
     public void setChoice(int choice) {
@@ -22,21 +31,6 @@ public class ProductOperationFactory {
     }
 
     ProductOperation operate(){
-        if(choice==1){
-            return new ProductUpdate(scanner,connection);
-        }
-        else if(choice==2){
-            return new ProductShowAll(connection);
-        }
-        else if(choice==3){
-            return new ProductInsertProduct(connection,scanner);
-        }
-        else if(choice==4){
-            return new ProductShowOne(connection,scanner);
-        }
-        else if(choice==5){
-            return new ProductDelete(scanner,connection);
-        }
-        return null;
+        return operations.get(choice);
     }
 }
