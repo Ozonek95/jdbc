@@ -14,6 +14,9 @@ public class ProductInsert implements ProductOperation {
         this.scanner=scanner;
     }
 
+    public ProductInsert(){
+
+    }
     public void process() {
 
         System.out.println("Give catalog number");
@@ -46,5 +49,16 @@ public class ProductInsert implements ProductOperation {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void setScanner(Scanner scanner) {
+        this.scanner=scanner;
+    }
+
+    @Override
+    public void setConnection(Connection connection) {
+
+        this.connection = connection;
     }
 }

@@ -4,12 +4,16 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Scanner;
 
 public class ProductShowAll implements ProductOperation {
     Connection connection;
 
     public ProductShowAll(Connection connection) {
         this.connection = connection;
+    }
+    public ProductShowAll(){
+
     }
 
     public void process() {
@@ -42,5 +46,17 @@ public class ProductShowAll implements ProductOperation {
                 }
             }
         }
+    }
+
+    @Override
+    public void setScanner(Scanner scanner) {
+
+    }
+
+    @Override
+    public void setConnection(Connection connection) {
+
+        this.connection = connection;
+
     }
 }

@@ -14,6 +14,8 @@ public class ProductUpdate implements ProductOperation {
         this.scanner = scanner;
     }
 
+    public ProductUpdate(){}
+
     public void process() {
             PreparedStatement preparedStatement = null;
             try {
@@ -48,6 +50,17 @@ public class ProductUpdate implements ProductOperation {
                 }
             }
 
+    }
+
+    @Override
+    public void setScanner(Scanner scanner) {
+        this.scanner=scanner;
+    }
+
+    @Override
+    public void setConnection(Connection connection) {
+
+        this.connection=connection;
     }
 
 }

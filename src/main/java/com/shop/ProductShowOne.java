@@ -14,6 +14,7 @@ public class ProductShowOne implements ProductOperation{
         this.connection = connection;
         this.scanner = scanner;
     }
+    public ProductShowOne(){}
 
     public void process() {
         System.out.println("Give product ID");
@@ -49,5 +50,16 @@ public class ProductShowOne implements ProductOperation{
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void setScanner(Scanner scanner) {
+        this.scanner=scanner;
+    }
+
+    @Override
+    public void setConnection(Connection connection) {
+
+        this.connection=connection;
     }
 }

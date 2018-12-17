@@ -14,6 +14,16 @@ public class ProductDelete implements ProductOperation {
         this.scanner = scanner;
     }
 
+    public ProductDelete(){}
+
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
+
+    public void setScanner(Scanner scanner) {
+        this.scanner = scanner;
+    }
+
     public void process() {
         System.out.println("Give ID of product You want to delete");
         int productId = Integer.parseInt(scanner.nextLine());

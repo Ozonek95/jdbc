@@ -9,28 +9,27 @@ public class ProductOperationFactory {
     private Scanner scanner;
     private Connection connection;
     private int choice;
-    private Map<Integer,ProductOperation> operations;
+    private Map<Integer,ProductOperations> operations;
 
     public ProductOperationFactory(Connection connection,Scanner scanner) {
         this.scanner = scanner;
         this.connection = connection;
         this.operations = new HashMap<>();
-        operations.put(1,new ProductUpdate(scanner,connection));
-        operations.put(2,new ProductShowAll(connection));
-        operations.put(3,new ProductInsert(connection,scanner));
-        operations.put(4,new ProductShowOne(connection,scanner));
-        operations.put(5,new ProductDelete(scanner,connection));
+        operations.put(1,ProductOperations.UPDATE);
+        operations.put(2,ProductOperations.SHOW_ALL);
+        operations.put(3,ProductOperations.INSERT);
+        operations.put(4,ProductOperations.SHOW_ONE);
+        operations.put(5,ProductOperations.DELETE);
     }
 
     public void setChoice(int choice) {
         this.choice = choice;
     }
 
-    public void setScanner(Scanner scanner) {
-        this.scanner = scanner;
-    }
-
     ProductOperation operate(){
-        return operations.get(choice);
+        ProductOperation operation = operations.get(choice).getOperation();
+        operation.setScanner(scanner);
+        operation.setConnection(connection);
+        return operation;
     }
 }
